@@ -1,0 +1,55 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Add your styles or external CSS links here -->
+    <title>Login Page</title>
+  </head>
+  <body>
+    <div id="login-container">
+      <h2>Login</h2>
+      <form id="login-form" method="POST">
+        {% csrf_token %}
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required />
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required />
+
+        <button type="submit" class="btn btn-success" onclick='custom_alert()' >
+          Login
+        </button>
+        {{context}}
+      </form>
+    </div>
+
+    <script>
+      function login() {
+        const enteredUsername = document.getElementById("username").value;
+        const enteredPassword = document.getElementById("password").value;
+
+        // Check if entered values match the hardcoded values
+        if (enteredUsername === "user" && enteredPassword === "pass") {
+          alert("Login successful!");
+
+          // Call the capture endpoint on the server
+          fetch("/capture", {
+            method: "POST",
+          })
+            .then((response) => response.text())
+            .then((result) => {
+              alert(result);
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+            });
+        } else {
+          alert("Invalid username or password");
+        }
+      }
+      function custom_alert(){
+        alert("smile please")
+      }
+    </script>
+  </body>
+</html>
